@@ -7,7 +7,7 @@ def utility_A(x1, x2, alpha):
     return x1**alpha * x2**(1 - alpha)
 # Forbruger A vare x2
 def utility_B(x1, x2, beta):
-    return x1**beta * x2**(1 - beta)
+    return (1-x1)**beta * (1-x2)**(1 - beta)
 
 # Forbruger B vare x1
 
