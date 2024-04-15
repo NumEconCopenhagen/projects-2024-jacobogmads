@@ -20,10 +20,9 @@ def index_to_year(df, base_year):
     return df
 
 import matplotlib.pyplot as plt
-import pandas as pd
 
 # define the plot_e function
-def plot_e(df, category1, category2): 
+def plot_a(df, category1, category2): 
     # Filter the DataFrame for each category
     I1 = df['Category'] == category1
     I2 = df['Category'] == category2
@@ -32,19 +31,47 @@ def plot_e(df, category1, category2):
     plt.figure(figsize=(20, 12))
     
     # Plot the first category
-    plt.plot(df.loc[I1, 'Date'], df.loc[I1, 'Value'], '-o', label=category1)
+    plt.plot(df.loc[I1, 'year'], df.loc[I1, 'Value'], '-o', label=category1)
     
     # Plot the second category on the same axes
-    plt.plot(df.loc[I2, 'Date'], df.loc[I2, 'Value'], '-o', label=category2, color='red')
+    plt.plot(df.loc[I2, 'year'], df.loc[I2, 'Value'], '-o', label=category2, color='red')
 
     # Add a vertical line at year 2015
     plt.axvline(2015, color='black', linestyle='--', linewidth=0.5, label='Index 2015=100')
     
     # Enhance the plot with legend, labels, and title
     plt.legend()
-    plt.xlabel('Date')
+    plt.xlabel('year')
     plt.ylabel('Value')
     plt.title('Comparative Plot of Categories')
+    
+    # Show the plot
+    plt.show()
+
+
+
+def plot_c(df1, df2, category, vehicle):
+    # Filter each DataFrame for the specified category
+    I1 = df1['Category'] == category
+    I2 = df2['vehicle'] == vehicle
+    
+    # Initialize the plot with specified figure size
+    plt.figure(figsize=(20, 12))
+    
+    # Plot the first category from the first dataframe
+    plt.plot(df1.loc[I1, 'year'], df1.loc[I1, 'Value'], '-o', label=f'{category} (DF1)')
+    
+    # Plot the second category from the second dataframe
+    plt.plot(df2.loc[I2, 'year'], df2.loc[I2, 'personkm_pr_cap'], '-o', label=f'{vehicle} (DF2)', color='red')
+
+    # Add a vertical line at year 2015
+    plt.axvline(2015, color='black', linestyle='--', linewidth=0.5, label='Index 2015=100')
+    
+    # Enhance the plot with legend, labels, and title
+    plt.legend()
+    plt.xlabel('year')
+    plt.ylabel('Index')
+    plt.title('Comparative Plot of Categories from Different DataFrames')
     
     # Show the plot
     plt.show()
