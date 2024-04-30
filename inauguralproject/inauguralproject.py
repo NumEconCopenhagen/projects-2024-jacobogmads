@@ -19,7 +19,8 @@ def utility_A(x1, x2, alpha):
     return x1**alpha * x2**(1 - alpha)
 # COMSUMBER B
 def utility_B(x1, x2, beta):
-    return (1-x1)**beta * (1-x2)**(1 - beta)
+    return x1**beta * x2**(1 - beta)
+
 
 
 
@@ -37,6 +38,16 @@ def demand_B_x1(p1, omega_B1, omega_B2, beta):
 def demand_B_x2(p1, omega_B1, omega_B2, beta):
     return (1 - beta) * (p1 * omega_B1 + omega_B2)
 
+
+
+# DEFINING UTILITY FUNCTIONS GIVEN PRICE
+
+# CONSUMER A
+def price_utility_A(p1, omega_A1, omega_A2, alpha):
+    return demand_A_x1(p1, omega_A1, omega_A2, alpha)**alpha * demand_A_x2(p1, omega_A1, omega_A2, alpha)**(1 - alpha)
+# COMSUMBER B
+def price_utility_B(p1, omega_B1, omega_B2, beta):
+    return demand_B_x1(p1, omega_B1, omega_B2, beta)**beta * demand_B_x2(p1, omega_B1, omega_B2, beta)**(1 - beta)
 
 
 
