@@ -49,10 +49,6 @@ class CakeEating:
         k_next = (k**alpha - c) / (1 + n)  # Calculating next period's capital
         return u(c) + beta * (1 + n) * v(k_next)
 
-# Example instantiation and usage:
-model = CakeEating(beta=0.95, n=0.1, alpha=0.33, k_grid_min=0.01, k_grid_max=10, k_grid_size=200)
-
-
 
 
 
