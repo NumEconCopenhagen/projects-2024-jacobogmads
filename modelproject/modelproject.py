@@ -23,7 +23,7 @@ def maximize(g, a, b, args):
 
 class CakeEating:
 
-    def __init__(self, beta=0.95, n=0.05, alpha=0.3, k_grid_min=1e-3, k_grid_max=6.0, k_grid_size=150):
+    def __init__(self, beta=0.9, n=0.05, alpha=0.33, k_grid_min=1e-3, k_grid_max=6.0, k_grid_size=150):
         self.beta, self.n, self.alpha = beta, n, alpha
 
         # Set up grid
