@@ -70,3 +70,26 @@ def T(v, ce):
     return v_new
 
 
+def compute_value_function(ce, tol=1e-4, max_iter=1000, verbose=True, print_skip=1):
+    # Set up loop
+    v = ce.u(ce.k_grid)  # Use utility as initial guess
+    i = 0
+    error = tol + 1
+
+    while i < max_iter and error > tol:
+        v_new = T(v, ce)
+        error = np.max(np.abs(v - v_new))
+        i += 1
+
+        if verbose and i % print_skip == 0:
+            print(f"Error at iteration {i} is {error}.")
+
+        v = v_new
+
+    if error > tol:
+        print("Failed to converge!")
+    elif verbose:
+        print(f"\nConverged in {i} iterations.")
+
+    return v_new
+
