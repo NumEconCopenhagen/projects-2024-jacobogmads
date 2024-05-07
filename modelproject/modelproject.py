@@ -96,7 +96,12 @@ def T(v, ce):
     """
     v_new = np.empty_like(v)
     for i, k in enumerate(ce.k_grid):
-        # For each capital level, find the optimal consumption and its value
+        """
+        Here, maximize is called to find the optimal consumption for a given capital 
+        level k and its value. The second argument 1e-10 is the lower bound of the interval 
+        for maximization, and k is the current capital level. Since the upper bound is not 
+        explicitly specified here, the optimization is essentially unbounded in the upper direction.
+        """
         v_new[i] = maximize(ce.state_action_value, 1e-10, k, (k, v))[1]
     return v_new
 
