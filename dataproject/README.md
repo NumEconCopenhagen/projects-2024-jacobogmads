@@ -1,14 +1,18 @@
-# Data analysis project
+# Data Analysis Project
 
-Our project is titled **PROJECT TITLE** and is about EXPLAIN.
+## Project Title
+**Insights from Data: Exploratory Data Analysis and Statistical Modeling**
 
-The **results** of the project can be seen from running [dataproject.ipynb](dataproject.ipynb).
+## About
+This project focuses on performing exploratory data analysis using a dataset provided in `data.csv`. We also initiate an API from Statistics Denmark.
 
-We apply the **following datasets**:
+## Results
+The findings and insights from the analysis are documented and can be explored by running [dataproject.ipynb](dataproject.ipynb). This Jupyter Notebook contains comprehensive analyses including data cleaning, visualization, and statistical tests to provide a robust understanding of the underlying data.
 
-1. dataX.csv (*source*) 
-1. dataY.csv (*source*)
-
-**Dependencies:** Apart from a standard Anaconda Python 3 installation, the project requires the following installations:
-
-``pip install matplotlib-venn``
+## Dependencies
+Apart from a standard Anaconda Python 3 installation, the project requires the following additional packages:
+- `numpy`
+- `pandas`
+- `matplotlib`
+- `scipy`
+- `seaborn`
