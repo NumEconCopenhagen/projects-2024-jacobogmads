@@ -15,11 +15,11 @@ p1_values = np.linspace(0.5, 2.5, N)
 # DEFINING UTILITY FUNCTIONS
 
 # CONSUMER A
-def utility_A(x1, x2, alpha):
-    return x1**alpha * x2**(1 - alpha)
+def utility_A(xA1, xA2, alpha):
+    return xA1**alpha * xA2**(1 - alpha)
 # COMSUMBER B
-def utility_B(x1, x2, beta):
-    return x1**beta * x2**(1 - beta)
+def utility_B(xB1, xB2, beta):
+    return xB1**beta * xB2**(1 - beta)
 
 
 
@@ -27,16 +27,21 @@ def utility_B(x1, x2, beta):
 
 # DEFINING DEMAND FUNCTIONS
 def demand_A_x1(p1, omega_A1, omega_A2, alpha):
-    return alpha * (p1 * omega_A1 + omega_A2) / p1
+    xA1 = alpha * (p1 * omega_A1 + omega_A2) / p1
+    return xA1
 
 def demand_A_x2(p1, omega_A1, omega_A2, alpha):
-    return (1 - alpha) * (p1 * omega_A1 + omega_A2)
+    xA2 = (1 - alpha) * (p1 * omega_A1 + omega_A2)
+    return xA2
 
 def demand_B_x1(p1, omega_B1, omega_B2, beta):
-    return beta * (p1 * omega_B1 + omega_B2) / p1
+    xB1 = beta * (p1 * omega_B1 + omega_B2) / p1
+    return xB1
 
 def demand_B_x2(p1, omega_B1, omega_B2, beta):
-    return (1 - beta) * (p1 * omega_B1 + omega_B2)
+    xB2 = (1 - beta) * (p1 * omega_B1 + omega_B2)
+    return xB2
+
 
 
 
