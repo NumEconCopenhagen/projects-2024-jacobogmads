@@ -146,3 +146,92 @@ def compute_value_and_policy(ce, tol=1e-4, max_iter=1000, verbose=True, print_sk
         policy[j] = c
 
     return v_new, policy
+
+
+
+class CakeEating2:
+    """
+    A class representing the dynamic problem of cake eating where an agent decides
+    how much cake to consume over time to maximize utility given preferences and
+    resource constraints.
+    
+    Parameters:
+        beta (float): Discount factor reflecting time preference.
+        n (float): Population growth rate, affecting resource dilution.
+        alpha (float): Elasticity parameter influencing production.
+        k_grid_min (float): Minimum capital in the grid.
+        k_grid_max (float): Maximum capital in the grid.
+        k_grid_size (int): Number of points in the capital grid.
+    """
+    def __init__(self, beta=0.9, n=0.05, alpha=1, gamma=0.5, k_grid_min=1e-3, k_grid_max=20.0, k_grid_size=150):
+        self.beta, self.n, self.alpha, self.gamma = beta, n, alpha, gamma
+        # Set up the grid for capital values
+        self.k_grid = np.linspace(k_grid_min, k_grid_max, k_grid_size)
+
+    def u(self, c):
+        """Utility function with logarithmic utility of consumption."""
+        return c**self.gamma
+
+    def u_prime(self, c):
+        """Derivative of the utility function, representing marginal utility of consumption."""
+        return self.gamma * c**(1 - self.gamma)
+
+    def state_action_value(self, c, k, v_array):
+        """
+        Calculate the right-hand side of the Bellman equation for a given state `k` and action `c`.
+        
+        This represents the value of taking action `c` (consuming `c` units of cake) while having
+        `k` units of capital, based on the future value function represented by `v_array`.
+        
+        Parameters:
+            c (float): Consumption level.
+            k (float): Current capital.
+            v_array (np.array): Array representing the value function for different capital levels.
+
+        Returns:
+            float: Value of taking action `c` at state `k`.
+        """
+        u, beta, n, alpha = self.u, self.beta, self.n, self.alpha
+        # Function to interpolate the next value from the value function
+        v = lambda k: np.interp(k, self.k_grid, v_array)
+        # Next period's capital after consumption and population growth
+        k_next = (k**alpha - c) / (1 + n)
+        return u(c) + beta * (1 + n) * v(k_next)
+
+def compute_value_and_policy2(ce, tol=1e-6, max_iter=1000, verbose=True, print_skip=100):
+    """
+    Computes the value function and consumption policy for the CakeEating problem using iteration.
+    
+    Parameters:
+        ce (CakeEating2): An instance of the CakeEating2 class.
+        tol (float): Tolerance level for convergence.
+        max_iter (int): Maximum number of iterations.
+        verbose (bool): If True, prints convergence information.
+        print_skip (int): Number of iterations to skip between prints if verbose is True.
+
+    Returns:
+        tuple: The converged value function and corresponding consumption policy.
+    """
+    # Start with the initial guess for the value function
+    v = ce.u(ce.k_grid)
+    i = 0
+    error = tol + 1
+
+    while error > tol and i < max_iter:
+        v_new = np.zeros_like(v)
+        policy = np.zeros_like(v)
+
+        for idx, k in enumerate(ce.k_grid):
+            c_vals = np.linspace(1e-3, k, 100)  # possible consumption values
+            v_c_vals = [ce.state_action_value(c, k, v) for c in c_vals]
+            v_new[idx] = max(v_c_vals)
+            policy[idx] = c_vals[np.argmax(v_c_vals)]
+
+        error = np.max(np.abs(v_new - v))
+        v = v_new
+        i += 1
+
+        if verbose and i % print_skip == 0:
+            print(f"Iteration {i}, Error: {error}")
+
+    return v, policy
